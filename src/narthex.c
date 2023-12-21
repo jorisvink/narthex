@@ -171,7 +171,7 @@ narthex_register(struct http_request *req)
 		return (KORE_RESULT_OK);
 	}
 
-	len = snprintf(path, sizeof(path), "0x%08x.key", keyid);
+	len = snprintf(path, sizeof(path), "0x%x.key", keyid);
 	if (len == -1 || (size_t)len >= sizeof(path)) {
 		http_response(req, HTTP_STATUS_INTERNAL_ERROR, NULL, 0);
 		return (KORE_RESULT_OK);
