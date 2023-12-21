@@ -30,7 +30,7 @@
 void		usage(void) __attribute__((noreturn));
 
 int		narthex_register(struct http_request *);
-void		narthex_set_options(const char *, const char *);
+void		narthex_set_options(int, const char *, const char *);
 
 void
 usage(void)
@@ -51,10 +51,10 @@ usage(void)
 void
 kore_parent_configure(int argc, char *argv[])
 {
-	int			ch;
 	struct kore_route	*rt;
 	struct kore_server	*srv;
 	struct kore_domain	*dom;
+	int			ch, foreground;
 	const char		*runas, *rootdir;
 	const char		*certfile, *domain, *keyfile, *ip, *port;
 
@@ -67,14 +67,18 @@ kore_parent_configure(int argc, char *argv[])
 
 	port = "8192";
 	ip = "0.0.0.0";
+	foreground = 0;
 
-	while ((ch = getopt(argc, argv, "c:d:k:i:p:r:u:")) != -1) {
+	while ((ch = getopt(argc, argv, "c:d:fk:i:p:r:u:")) != -1) {
 		switch (ch) {
 		case 'c':
 			certfile = optarg;
 			break;
 		case 'd':
 			domain = optarg;
+			break;
+		case 'f':
+			foreground = 1;
 			break;
 		case 'k':
 			keyfile = optarg;
@@ -100,7 +104,7 @@ kore_parent_configure(int argc, char *argv[])
 	    keyfile == NULL || rootdir == NULL)
 		usage();
 
-	narthex_set_options(runas, rootdir);
+	narthex_set_options(foreground, runas, rootdir);
 
 	srv = kore_server_create("default");
 	if (!kore_server_bind(srv, ip, port, NULL))
@@ -121,10 +125,10 @@ kore_parent_configure(int argc, char *argv[])
 }
 
 void
-narthex_set_options(const char *runas, const char *rootdir)
+narthex_set_options(int foreground, const char *runas, const char *rootdir)
 {
 	worker_count = 1;
-	kore_foreground = 1;
+	kore_foreground = foreground;
 
 	skip_runas = 1;
 	kore_foreground = 1;
