@@ -1,0 +1,7 @@
+*.o
+.flavor
+.objs
+narthex
+assets
+assets.h
+cert
