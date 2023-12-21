@@ -4,7 +4,7 @@ Acts as the identity registration server for a sanctum cathedral.
 
 ## Building
 
-Requires <a href="https://github.com/jorisvink/kore">kore> to be installed
+Requires <a href="https://github.com/jorisvink/kore">kore</a> to be installed
 on your system.
 
 ```
