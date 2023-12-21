@@ -163,6 +163,11 @@ narthex_register(struct http_request *req)
 	if ((id = strrchr(req->path, '/')) == NULL)
 		return (KORE_RESULT_ERROR);
 
+	if (req->http_body->length != 32) {
+		http_response(req, HTTP_STATUS_BAD_REQUEST, NULL, 0);
+		return (KORE_RESULT_OK);
+	}
+
 	keyid = kore_strtonum(id + 1, 16, 0, UINT_MAX, &err);
 	if (err != KORE_RESULT_OK) {
 		http_response(req, HTTP_STATUS_BAD_REQUEST, NULL, 0);
