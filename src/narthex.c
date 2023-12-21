@@ -86,7 +86,7 @@ kore_parent_configure(int argc, char *argv[])
 			port = optarg;
 			break;
 		case 'r':
-			rootdir = kore_strdup(optarg);
+			rootdir = optarg;
 			break;
 		case 'u':
 			runas = optarg;
