@@ -127,7 +127,6 @@ kore_parent_configure(int argc, char *argv[])
 void
 narthex_set_options(int foreground, const char *runas, const char *rootdir)
 {
-	skip_runas = 1;
 	worker_count = 1;
 	kore_foreground = foreground;
 
